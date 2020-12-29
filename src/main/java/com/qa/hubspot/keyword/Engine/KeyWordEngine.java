@@ -25,18 +25,18 @@ public class KeyWordEngine {
 	public BasePage base;
 
 	public KeyWordElementActions keyWordEleActions;
-	
+
 	public static Workbook book;
 	public static Sheet sheet;
 	public static ThreadLocal<Workbook> testBook = new ThreadLocal<Workbook>();
 	public static ThreadLocal<Sheet> testSheet = new ThreadLocal<Sheet>();
 
 	public final String TESTDATA_SHEET_PATH = "C:/Users/Deborah/eclipse-workspace/KeyWordDrivenWebFramework-master/src/main/java/com/qa/hubspot/keyword/Scenarios/hubspot_scenarios.xlsx";
+	String locatorValue = null;
+	String locatorName = null;
+	FileInputStream file = null;
 
 	public void startExecution(String sheetName) {
-		String locatorValue = null;
-		String locatorName = null;
-		FileInputStream file = null;
 		try {
 			file = new FileInputStream(TESTDATA_SHEET_PATH);
 		} catch (FileNotFoundException e) {
@@ -57,16 +57,15 @@ public class KeyWordEngine {
 
 			try {
 				String locatorColValue = testSheet.get().getRow(i + 1).getCell(k + 1).toString().trim();
-
 				if (!locatorColValue.equalsIgnoreCase("NA")) {
 					locatorName = locatorColValue.split("=")[0].trim();
 					locatorValue = locatorColValue.split("=")[1].trim();
-					System.out.println(locatorName);
+					System.out.println(locatorValue);
 				}
 				String action = testSheet.get().getRow(i + 1).getCell(k + 2).toString().trim();
-				System.out.println(action);
+				System.out.println("action is "+action);
 				String value = testSheet.get().getRow(i + 1).getCell(k + 3).toString().trim();
-				System.out.println(value);
+				System.out.println("value is "+value); 
 				switch (action) {
 
 				case "open browser":
@@ -78,7 +77,7 @@ public class KeyWordEngine {
 				case "OPEN_URL":
 					keyWordEleActions.launchUrl(value);
 					break;
-
+					
 				case "sendKeys":
 					driver.manage().window().maximize();
 					driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
@@ -89,16 +88,14 @@ public class KeyWordEngine {
 					System.out.println(value);
 					driver.findElement(By.id(locatorValue)).click();
 					break;
-
-				case "CLOSE_BROWSER":
-					keyWordEleActions.quitBrowser();
-					break;
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
+	}
+
 
 	}
 
-}
+

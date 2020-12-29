@@ -13,15 +13,12 @@ public class StepDefination {
 	
 	@Given("user opens the given application")
 	public void user_opens_the_given() {
-	
 		keyWordEngine.startExecution("login");
 	}
 
 	@When("user  search for Apple Mobile")
 	public void user_search_for_Apple_Mobile() {
-		
-	//	keyWordEngine.startExecution("login");
-		
+
 		
 	}
 

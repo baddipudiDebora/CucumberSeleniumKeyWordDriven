@@ -70,9 +70,12 @@ public class KeyWordElementActions extends BasePage {
 	}
 
 	public void sendKeys(String value) {
+	
 		WebElement element = getElement(By.id(value));
 		
 		try {
+			Thread.sleep(5000);
+			System.out.println("waiting for textbox");
 			element.sendKeys(value);
 		} catch (Exception e) {
 			e.printStackTrace();
