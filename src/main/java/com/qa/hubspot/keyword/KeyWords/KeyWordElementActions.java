@@ -31,10 +31,7 @@ public class KeyWordElementActions extends BasePage {
 	}
 
 	public WebElement getElement(String locatorvalue) throws InterruptedException {
-		Thread.sleep(5000);
-		System.out.println("getting element");
 		WebElement ele = driver.findElement(By.id(locatorvalue));
-		System.out.println(ele);
 		return ele;
 
 	}
@@ -56,16 +53,21 @@ public class KeyWordElementActions extends BasePage {
 		}
 	}
 
-	public void verifyText(WebElement ele) throws InterruptedException {
+	public void verifyCount(WebElement ele) throws InterruptedException {
 		Thread.sleep(4000);
 		String text = ele.getText();
 		String[] textarray = text.split(" ");
 		String productCount = textarray[1].toString();
 		int pcount = Integer.parseInt(productCount);
 		assertTrue(pcount >= 1);
-		
 	}
-
+	public String verifyMobileName(WebElement mobilename) throws InterruptedException {
+		Thread.sleep(2000);
+		String text = mobilename.getText();
+		String[] textarray = text.split(" ");
+		String MobileName = textarray[4].toString().toUpperCase();
+		return MobileName;
+	}
 	public void quitBrowser() {
 		try {
 			driver.quit();

@@ -79,7 +79,6 @@ public class KeyWordEngine {
 					break;
 				case "sendkeys":
 					driver.manage().window().maximize();
-					Thread.sleep(2000);
 					driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 					WebElement ele = keyWordEleActions.getElement(locatorValue);
 					keyWordEleActions.sendKeys(ele, value);
@@ -89,10 +88,15 @@ public class KeyWordEngine {
 					driver.findElement(By.id(locatorValue)).click();
 					break;
 
-				case "VERIFY_TEXT":
-					Thread.sleep(2000);
+				case "VERIFY_COUNT":
 					WebElement ele1 = keyWordEleActions.getElement(locatorValue);
-					keyWordEleActions.verifyText(ele1);
+					keyWordEleActions.verifyCount(ele1);
+					break;
+
+				case "Print_Mobile_Name":
+					WebElement mobilename = keyWordEleActions.getElement(locatorValue);
+					String mobilename1 = keyWordEleActions.verifyMobileName(mobilename);
+					System.out.println("The mobile Name is " + mobilename1);
 					break;
 
 				case "quit":
