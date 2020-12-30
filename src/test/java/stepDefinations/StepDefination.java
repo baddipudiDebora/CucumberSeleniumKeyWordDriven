@@ -1,9 +1,6 @@
 package stepDefinations;
 
-import org.testng.annotations.Parameters;
-
 import com.qa.hubspot.keyword.Engine.KeyWordEngine;
-
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;

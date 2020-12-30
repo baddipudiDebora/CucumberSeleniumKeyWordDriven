@@ -16,6 +16,7 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 import com.qa.hubspot.keyword.KeyWords.KeyWordElementActions;
 
@@ -31,7 +32,7 @@ public class KeyWordEngine {
 	public static ThreadLocal<Workbook> testBook = new ThreadLocal<Workbook>();
 	public static ThreadLocal<Sheet> testSheet = new ThreadLocal<Sheet>();
 
-	public final String TESTDATA_SHEET_PATH = "C:/Users/Deborah/eclipse-workspace/KeyWordDrivenWebFramework-master/src/main/java/com/qa/hubspot/keyword/Scenarios/hubspot_scenarios.xlsx";
+	public String TESTDATA_SHEET_PATH = "C:/Users/Deborah/eclipse-workspace/cucumberAssignment/src/test/java/stepDefinations/KeywordsFile.xlsx";
 	String locatorValue = null;
 	String locatorName = null;
 	FileInputStream file = null;
@@ -60,12 +61,11 @@ public class KeyWordEngine {
 				if (!locatorColValue.equalsIgnoreCase("NA")) {
 					locatorName = locatorColValue.split("=")[0].trim();
 					locatorValue = locatorColValue.split("=")[1].trim();
-					System.out.println(locatorValue);
 				}
 				String action = testSheet.get().getRow(i + 1).getCell(k + 2).toString().trim();
-				System.out.println("action is "+action);
+
 				String value = testSheet.get().getRow(i + 1).getCell(k + 3).toString().trim();
-				System.out.println("value is "+value); 
+
 				switch (action) {
 
 				case "open browser":
@@ -77,16 +77,26 @@ public class KeyWordEngine {
 				case "OPEN_URL":
 					keyWordEleActions.launchUrl(value);
 					break;
-					
-				case "sendKeys":
+				case "sendkeys":
 					driver.manage().window().maximize();
+					Thread.sleep(2000);
 					driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-					keyWordEleActions.sendKeys(locatorValue);
+					WebElement ele = keyWordEleActions.getElement(locatorValue);
+					keyWordEleActions.sendKeys(ele, value);
 					break;
 
 				case "click":
-					System.out.println(value);
 					driver.findElement(By.id(locatorValue)).click();
+					break;
+
+				case "VERIFY_TEXT":
+					Thread.sleep(2000);
+					WebElement ele1 = keyWordEleActions.getElement(locatorValue);
+					keyWordEleActions.verifyText(ele1);
+					break;
+
+				case "quit":
+					keyWordEleActions.quitBrowser();
 					break;
 				}
 			} catch (Exception e) {
@@ -95,7 +105,4 @@ public class KeyWordEngine {
 		}
 	}
 
-
-	}
-
-
+}
